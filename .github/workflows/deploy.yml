@@ -25,7 +25,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9.6.0
 
       - name: Get pnpm store directory
         shell: bash
@@ -40,26 +40,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Check lockfile
-        run: |
-          echo "Checking for pnpm-lock.yaml..."
-          if [ -f pnpm-lock.yaml ]; then
-            echo "✅ pnpm-lock.yaml found"
-            ls -la pnpm-lock.yaml
-          else
-            echo "⚠️  pnpm-lock.yaml not found"
-            echo "Available files:"
-            ls -la
-          fi
-
       - name: Install dependencies
-        run: |
-          if [ -f pnpm-lock.yaml ]; then
-            pnpm install --frozen-lockfile
-          else
-            echo "Warning: pnpm-lock.yaml not found, installing without frozen lockfile"
-            pnpm install
-          fi
+        run: pnpm install --frozen-lockfile
 
       - name: Build application
         run: pnpm build
