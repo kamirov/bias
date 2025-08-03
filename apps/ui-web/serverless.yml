@@ -28,7 +28,7 @@ resources:
     S3Bucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:service}-${self:provider.stage}-${self:provider.region}
+        BucketName: ${self:service}-${self:provider.stage}
         PublicAccessBlockConfiguration:
           BlockPublicAcls: false
           BlockPublicPolicy: false
@@ -45,9 +45,13 @@ resources:
         PolicyDocument:
           Statement:
             - Effect: Allow
-              Principal: "*"
+              Principal: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
               Action: s3:GetObject
-              Resource: !Sub "${S3Bucket}/*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref S3Bucket
+                  - "/*"
 
     CloudFrontDistribution:
       Type: AWS::CloudFront::Distribution
