@@ -1,12 +1,14 @@
 # Bias Monorepo
 
-A monorepo containing a React frontend application built with Vite and TypeScript, deployable to AWS Lambda using the Serverless Framework.
+A monorepo containing a React frontend application built with Vite and TypeScript, deployable to AWS S3 + CloudFront for static hosting.
 
 ## 🚀 Features
 
 - **Monorepo Structure**: Organized with pnpm workspaces
 - **Modern Frontend**: React 18 + TypeScript + Vite
-- **Serverless Ready**: Deployable to AWS Lambda
+- **Static Hosting**: Deployable to AWS S3 + CloudFront
+- **CloudFront CDN**: Global content delivery with automatic cache invalidation
+- **Environment Configuration**: Centralized config management
 - **CI/CD**: Automated deployment with GitHub Actions
 - **Offline Development**: Serverless offline for local testing
 
@@ -65,13 +67,10 @@ pnpm build
 pnpm preview
 ```
 
-### Serverless Development
+### Deployment
 
 ```bash
-# Start serverless offline
-pnpm deploy:offline
-
-# Deploy to AWS Lambda
+# Deploy to AWS S3 + CloudFront
 pnpm deploy
 ```
 
@@ -112,6 +111,8 @@ serverless deploy --stage dev
 
 # Deploy to prod stage
 serverless deploy --stage prod
+
+# The application will be available at the CloudFront URL
 ```
 
 ### Automated Deployment
@@ -130,12 +131,11 @@ The GitHub Actions workflow automatically deploys:
 - **Vite**: Build tool and dev server
 - **CSS**: Modern styling with CSS modules
 
-### Serverless Stack
+### AWS Infrastructure
 
-- **AWS Lambda**: Serverless compute
-- **API Gateway**: HTTP API
+- **S3**: Static website hosting
+- **CloudFront**: Global CDN with cache invalidation
 - **Serverless Framework**: Infrastructure as code
-- **Serverless Offline**: Local development
 
 ## 🔍 Available Scripts
 
@@ -144,8 +144,7 @@ The GitHub Actions workflow automatically deploys:
 - `pnpm dev`: Start development server
 - `pnpm build`: Build for production
 - `pnpm preview`: Preview production build
-- `pnpm deploy`: Deploy to AWS Lambda
-- `pnpm deploy:offline`: Start serverless offline
+- `pnpm deploy`: Deploy to AWS S3 + CloudFront
 
 ### UI Web App
 
@@ -153,16 +152,38 @@ The GitHub Actions workflow automatically deploys:
 - `pnpm build`: Build with TypeScript and Vite
 - `pnpm lint`: Run ESLint
 - `pnpm preview`: Preview production build
-- `pnpm deploy`: Deploy to AWS Lambda
-- `pnpm deploy:offline`: Start serverless offline
+- `pnpm deploy`: Deploy to AWS S3 + CloudFront
 - `pnpm remove`: Remove deployed resources
 
 ## 🌐 Environment Variables
 
-| Variable     | Description      | Default       |
-| ------------ | ---------------- | ------------- |
-| `NODE_ENV`   | Environment mode | `development` |
-| `AWS_REGION` | AWS region       | `us-east-1`   |
+### Application Variables
+| Variable              | Description                    | Default       |
+| --------------------- | ------------------------------ | ------------- |
+| `VITE_APP_TITLE`      | Application title              | `Bias UI Web` |
+| `VITE_APP_VERSION`    | Application version            | `1.0.0`       |
+| `VITE_API_URL`        | API endpoint URL               | ``            |
+| `VITE_AWS_REGION`     | AWS region                     | `us-east-1`   |
+
+### AWS Configuration
+| Variable              | Description                    | Default       |
+| --------------------- | ------------------------------ | ------------- |
+| `AWS_REGION`          | AWS region                     | `us-east-1`   |
+| `AWS_ACCESS_KEY_ID`   | AWS access key                 | -             |
+| `AWS_SECRET_ACCESS_KEY`| AWS secret key                 | -             |
+
+### Serverless Configuration
+| Variable              | Description                    | Default       |
+| --------------------- | ------------------------------ | ------------- |
+| `STAGE`               | Deployment stage               | `dev`         |
+| `CLOUDFRONT_DISTRIBUTION_ID` | CloudFront distribution ID | -             |
+
+### Environment Setup
+Copy the example environment file and configure your variables:
+```bash
+cp apps/ui-web/env.example apps/ui-web/.env
+# Edit .env with your values
+```
 
 ## 📝 Development Guidelines
 

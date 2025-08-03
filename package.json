@@ -8,8 +8,7 @@
     "dev": "pnpm --filter ui-web dev",
     "build": "pnpm --filter ui-web build",
     "preview": "pnpm --filter ui-web preview",
-    "deploy": "pnpm --filter ui-web deploy",
-    "deploy:offline": "pnpm --filter ui-web deploy:offline"
+    "deploy": "pnpm --filter ui-web deploy"
   },
   "devDependencies": {
     "@types/node": "^22.0.0"

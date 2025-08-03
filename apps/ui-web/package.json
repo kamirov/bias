@@ -9,7 +9,6 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "serverless deploy",
-    "deploy:offline": "serverless offline start",
     "remove": "serverless remove"
   },
   "dependencies": {
@@ -26,8 +25,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "serverless": "^3.38.0",
-    "serverless-offline": "^13.3.0",
     "serverless-single-page-app-plugin": "^1.0.4",
+    "serverless-cloudfront-invalidate": "^1.0.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   }
