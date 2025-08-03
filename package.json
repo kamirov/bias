@@ -1,0 +1,21 @@
+{
+  "name": "bias",
+  "version": "1.0.0",
+  "description": "Bias monorepo",
+  "private": true,
+  "packageManager": "pnpm@8.15.0",
+  "scripts": {
+    "dev": "pnpm --filter ui-web dev",
+    "build": "pnpm --filter ui-web build",
+    "preview": "pnpm --filter ui-web preview",
+    "deploy": "pnpm --filter ui-web deploy",
+    "deploy:offline": "pnpm --filter ui-web deploy:offline"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
