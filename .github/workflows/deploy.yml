@@ -3,8 +3,18 @@ name: Deploy to AWS S3 + CloudFront
 on:
   push:
     branches: [main]
+    paths:
+      - "apps/ui-web/**"
+      - ".github/workflows/deploy.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
   pull_request:
     branches: [main]
+    paths:
+      - "apps/ui-web/**"
+      - ".github/workflows/deploy.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
 
 env:
   NODE_VERSION: "22"
