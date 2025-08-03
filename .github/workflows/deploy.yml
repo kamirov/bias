@@ -36,12 +36,30 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/package.json', '**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Check lockfile
+        run: |
+          echo "Checking for pnpm-lock.yaml..."
+          if [ -f pnpm-lock.yaml ]; then
+            echo "✅ pnpm-lock.yaml found"
+            ls -la pnpm-lock.yaml
+          else
+            echo "⚠️  pnpm-lock.yaml not found"
+            echo "Available files:"
+            ls -la
+          fi
+
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm install --frozen-lockfile
+          else
+            echo "Warning: pnpm-lock.yaml not found, installing without frozen lockfile"
+            pnpm install
+          fi
 
       - name: Build application
         run: pnpm build
